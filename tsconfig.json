@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    /* https://aka.ms/tsconfig */
+    "target": "es2022",
+    "module": "commonjs",
+    "declaration": true,
+    "declarationDir": "dist/",
+    "sourceMap": true,
+    "outDir": "dist/",
+    "isolatedDeclarations": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "rootDir": "src/",
+    "strict": true,
+    "skipLibCheck": true
+  },
+  "include": [
+    "src/**/*.ts"
+  ]
+}
