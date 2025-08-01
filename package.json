@@ -17,9 +17,19 @@
     "typescript": "5",
     "vitest": "3"
   },
-  "name": "http-json-client",
-  "author": "Michael Leonhard <michael@leonhardllc.com>",
+  "name": "@lyni-tech/http-json-client",
+  "author": "Michael Leonhard <michael@leonhardllc.com> (https://leonhardllc.com)",
   "description": "A TypeScript library for making HTTP requests with JSON",
   "version": "0.0.1",
-  "license": "Apache-2.0"
+  "keywords": [
+    "http",
+    "json",
+    "client",
+    "rpc"
+  ],
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lyni-tech/http-json-client-ts.git"
+  }
 }

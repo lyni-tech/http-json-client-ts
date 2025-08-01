@@ -29,7 +29,7 @@ export class ServerError extends RpcError {
 
 async function doFetch(
     method: string, url: URL | string,
-    body: Object | undefined,
+    body?: Object | undefined,
     opts?: {
         timeout_ms?: number | undefined,
         headers?: Record<string, string> | undefined,
@@ -137,7 +137,7 @@ async function tryReadText(res: Response): Promise<string | undefined> {
 export async function doRpc(
     method: string,
     url: URL | string,
-    body: Object | undefined,
+    body?: Object | undefined,
     opts?: {
         timeout_ms?: number | undefined,
         headers?: Record<string, string> | undefined,
