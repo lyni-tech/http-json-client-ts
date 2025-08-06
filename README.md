@@ -1,5 +1,7 @@
 # http-json-client-ts
+
 A TypeScript library for making HTTP requests with JSON.
+
 - No dependencies
 - 100% test coverage
 - Supports Browser and Node.js
@@ -28,3 +30,12 @@ try {
     }
 }
 ```
+
+# Changelog
+
+- 2025-08-05 v0.0.2 Support uploading blobs. Add ServerError.is400() and is500().
+- 2025-07-31 v0.0.1 Moved code from `lyni-node` to this package.
+
+# Release Process
+
+`./release.sh`
