@@ -25,11 +25,21 @@ export class ServerError extends RpcError {
         super(`Error talking to server: ${message}`)
         this.status = status
     }
+
+    public is400(): boolean {
+        const status = this.status ?? 0
+        return 400 <= status && status <= 499
+    }
+
+    public is500(): boolean {
+        const status = this.status ?? 0
+        return 500 <= status && status <= 599
+    }
 }
 
 async function doFetch(
     method: string, url: URL | string,
-    body?: Object | undefined,
+    body?: Object | Blob | undefined,
     opts?: {
         timeout_ms?: number | undefined,
         headers?: Record<string, string> | undefined,
@@ -44,7 +54,9 @@ async function doFetch(
         redirect: "error",
         signal: abortController.signal,
     }
-    if (body != undefined) {
+    if (body instanceof Blob) {
+        options.body = body
+    } else if (body !== undefined) {
         options.body = JSON.stringify(body)
         options.headers = {"content-type": "application/json", ...opts?.headers}
     }
@@ -137,7 +149,7 @@ async function tryReadText(res: Response): Promise<string | undefined> {
 export async function doRpc(
     method: string,
     url: URL | string,
-    body?: Object | undefined,
+    body?: Object | Blob | undefined,
     opts?: {
         timeout_ms?: number | undefined,
         headers?: Record<string, string> | undefined,

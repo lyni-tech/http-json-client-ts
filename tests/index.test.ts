@@ -227,7 +227,7 @@ test('POST 200 with no body', async () => {
         })
 })
 
-test('POST', async () => {
+test('POST json', async () => {
     await withTcpServer(
         async (socket) => {
             const req = await readSocket(socket, {read_ms: 100})
@@ -244,6 +244,27 @@ test('POST', async () => {
         async (url) => {
             const stopwatch = new Stopwatch()
             await expect(doRpc("POST", url, {a: 1})).resolves.toEqual({a: 1})
+            expect(stopwatch.elapsed_ms()).toBeLessThan(200)
+        })
+})
+
+test('POST blob', async () => {
+    await withTcpServer(
+        async (socket) => {
+            const req = await readSocket(socket, {read_ms: 100})
+            // console.log("readSocket", JSON.stringify(req))
+            expect(req).toSatisfy((s: string) => s.endsWith('\r\n\r\na1'))
+            await writeSocket(socket, [
+                'HTTP/1.1 200 OK',
+                'content-type: application/json',
+                'content-length: 2',
+                '',
+                '{}'
+            ].join('\r\n'))
+        },
+        async (url) => {
+            const stopwatch = new Stopwatch()
+            await expect(doRpc("POST", url, new Blob(["a", "1"]))).resolves.toEqual({})
             expect(stopwatch.elapsed_ms()).toBeLessThan(200)
         })
 })
@@ -349,4 +370,23 @@ test('user error message', async () => {
                 .toThrow(new UserError('err1', 400))
             expect(stopwatch.elapsed_ms()).toBeLessThan(100)
         })
+})
+
+test('is400', () => {
+    expect((new ServerError('err1', 200)).is400()).toBe(false)
+    expect((new ServerError('err1', 300)).is400()).toBe(false)
+    expect((new ServerError('err1', 400)).is400()).toBe(true)
+    expect((new ServerError('err1', 429)).is400()).toBe(true)
+    expect((new ServerError('err1', 499)).is400()).toBe(true)
+    expect((new ServerError('err1', 500)).is400()).toBe(false)
+})
+
+test('is500', () => {
+    expect((new ServerError('err1', 200)).is500()).toBe(false)
+    expect((new ServerError('err1', 300)).is500()).toBe(false)
+    expect((new ServerError('err1', 400)).is500()).toBe(false)
+    expect((new ServerError('err1', 500)).is500()).toBe(true)
+    expect((new ServerError('err1', 503)).is500()).toBe(true)
+    expect((new ServerError('err1', 599)).is500()).toBe(true)
+    expect((new ServerError('err1', 600)).is500()).toBe(false)
 })
