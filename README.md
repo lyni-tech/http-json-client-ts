@@ -33,6 +33,7 @@ try {
 
 # Changelog
 
+- 2025-08-06 v0.0.3 Fix release.sh.
 - 2025-08-05 v0.0.2 Support uploading blobs. Add ServerError.is400() and is500().
 - 2025-07-31 v0.0.1 Moved code from `lyni-node` to this package.
 

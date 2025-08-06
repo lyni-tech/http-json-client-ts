@@ -20,7 +20,7 @@
   "name": "@lyni-tech/http-json-client",
   "author": "Michael Leonhard <michael@leonhardllc.com> (https://leonhardllc.com)",
   "description": "A TypeScript library for making HTTP requests with JSON",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "keywords": [
     "http",
     "json",

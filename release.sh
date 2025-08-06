@@ -2,8 +2,10 @@
 (
   set -e
   set -x
-  npm ci
+  npm run clean
+  npm i
   npm run vitest
+  npm run build
 ) || exit 1
 
 if ! (git branch --show-current | grep -q -E '^main$'); then
